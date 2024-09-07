@@ -1,0 +1,252 @@
+[
+	{
+		"id": 1,
+		"title": "工作空间",
+		"type": 0,
+		"icon": "layui-icon layui-icon-console",
+		"href": "",
+		"children": [{
+			"id": 10,
+			"title": "控制后台",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "/system/main"
+		}, {
+			"id": 13,
+			"title": "数据分析",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/console/console2.html"
+		}, {
+			"id": 14,
+			"title": "百度一下",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "http://www.baidu.com"
+		}, {
+			"id": 15,
+			"title": "主题预览",
+			"icon": "layui-icon layui-icon-console",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/system/theme.html"
+		}]
+	},
+	{
+		"id": 2,
+		"title": "基础设置",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 20,
+				"title": "站点设置",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/result/success.html"
+			}
+		]
+	},
+	{
+		"id": 3,
+		"title": "权限管理",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 30,
+			"title": "管理员",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "/system/admin/list"
+		},
+			{
+				"id": 31,
+				"title": "角色管理",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "/system/role/list"
+			},
+			{
+				"id": 32,
+				"title": "权限配置",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "/system/auth/list"
+			}
+		]
+	},
+	{
+		"id": 4,
+		"title": "个人中心",
+		"icon": "layui-icon layui-icon-auz",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 40,
+			"title": "基本资料",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "/system/user/edit"
+		}]
+	},
+	{
+		"id": 5,
+		"title": "错误页面",
+		"icon": "layui-icon layui-icon-face-cry",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 50,
+				"title": "403",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/error/403.html"
+			},
+			{
+				"id": 51,
+				"title": "404",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/error/404.html"
+			},
+
+			{
+				"id": 52,
+				"title": "500",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/error/500.html"
+			}
+
+		]
+	},
+	{
+		"id": 6,
+		"title": "系统管理",
+		"icon": "layui-icon layui-icon-set-fill",
+		"type": 0,
+		"href": "",
+		"children": [{
+				"id": 60,
+				"title": "用户管理",
+				"icon": "layui-icon layui-icon-face-smile",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/user.html"
+			},
+			{
+				"id": 61,
+				"title": "角色管理",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/role.html"
+			},
+
+			{
+				"id": 62,
+				"title": "权限管理",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/power.html"
+			},
+
+			{
+				"id": 63,
+				"title": "部门管理",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/deptment.html"
+			},
+			{
+				"id": 64,
+				"title": "行为日志",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/log.html"
+			}, {
+				"id": 65,
+				"title": "数据字典",
+				"icon": "layui-icon layui-icon-face-cry",
+				"type": 1,
+				"openType": "_iframe",
+				"href": "view/system/dict.html"
+			}
+
+		]
+	},
+	{
+		"id": 7,
+		"title": "常用页面",
+		"icon": "layui-icon layui-icon-template-1",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 70,
+			"title": "登录页面",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "login.html"
+		}, {
+			"id": 71,
+			"title": "空白页面",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/system/space.html"
+		}]
+	},
+	{
+		"id": 8,
+		"title": "数据图表",
+		"icon": "layui-icon layui-icon-chart",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id": 80,
+			"title": "折线图",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/echarts/line.html"
+		}, {
+			"id": 81,
+			"title": "柱状图",
+			"icon": "layui-icon layui-icon-face-smile",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "view/echarts/column.html"
+		}]
+	},
+	{
+		"id": 9,
+		"title": "开发工具",
+		"icon": "layui-icon layui-icon-util",
+		"type": 0,
+		"href": "",
+		"children": [{
+			"id":90,
+			"title": "表单构建",
+			"icon": "layui-icon layui-icon-util",
+			"type": 1,
+			"openType": "_iframe",
+			"href": "component/code/index.html"
+		}]
+	}
+]
