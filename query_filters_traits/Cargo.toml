@@ -1,0 +1,8 @@
+[package]
+name = "query_filters_traits"
+version = "0.1.0"
+edition = "2021"
+license = "MIT"
+
+[dependencies]
+sea-orm = { version = "=1.1.0-rc.1", features = ["sqlx-sqlite", "runtime-async-std-native-tls"] }

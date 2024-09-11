@@ -83,7 +83,7 @@
             });
             table.render({
                 elem: '#user-table',
-                url: '/system/admin/json',
+                url: '/api/users',
                 page: true,
                 cols: [
                     [{
@@ -130,6 +130,13 @@
                 ],
                 skin: 'line',
                 toolbar: '#user-toolbar',
+                parseData: function(res) { // res 即为原始返回的数据
+                    return {
+                    "code": res.code, // 解析接口状态
+                    "msg": res.msg, // 解析提示文本
+                    "count": res.data.total, // 解析数据长度
+                    "data": res.data.list // 解析数据列表
+                    };},
                 defaultToolbar: [{
                     title: '刷新',
                     layEvent: 'refresh',
@@ -195,7 +202,7 @@
                     title: '新增',
                     shade: 0.1,
                     area: [common.isMobile() ? '100%' : '500px', common.isMobile() ? '100%' : '400px'],
-                    content: '/system/admin/add'
+                    content: '/users/add'
                 });
             }
 
