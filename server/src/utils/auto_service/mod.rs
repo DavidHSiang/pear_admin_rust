@@ -97,26 +97,5 @@ macro_rules! auto_service {
     };
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use std::env;
-
-//     use super::*;
-//     use crate::{db, domain::models::auth};
-//     use prelude::*;
-//     use sea_orm::TransactionTrait;
-//     auto_service!(TestService, auth);
-
-//     #[tokio::test]
-//     async fn test_serialize() {
-//         let root_path = env::current_dir().unwrap().join("../");
-//         assert!(env::set_current_dir(&root_path).is_ok());
-//         let txn = db!().begin().await.unwrap();
-//         let res = TestService::get_by_id::<auth::Model>(&txn, 2)
-//             .await
-//             .unwrap();
-//         txn.commit().await.unwrap();
-
-//         print!("{:#?}", res);
-//     }
-// }
+#[cfg(test)]
+mod tests {}
