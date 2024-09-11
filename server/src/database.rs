@@ -26,17 +26,17 @@ macro_rules! db {
     };
 }
 
-// #[cfg(test)]
-// mod tests {
-//     use std::env;
+#[cfg(test)]
+mod tests {
+    use std::env;
 
-//     #[tokio::test]
-//     async fn test_db() {
-//         let root_path = env::current_dir().unwrap().join("../");
-//         assert!(env::set_current_dir(&root_path).is_ok());
-//         let db = db!();
-//         // test connection
-//         let ret = db.ping().await;
-//         assert!(ret.is_ok());
-//     }
-// }
+    #[tokio::test]
+    async fn test_db() {
+        let root_path = env::current_dir().unwrap().join("../");
+        assert!(env::set_current_dir(&root_path).is_ok());
+        let db = db!();
+        // test connection
+        let ret = db.ping().await;
+        assert!(ret.is_ok());
+    }
+}
