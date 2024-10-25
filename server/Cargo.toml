@@ -6,10 +6,13 @@ license = "MIT"
 
 [dependencies]
 anyhow = "1.0.86"
-axum = { version = "0.7.5", features = ["macros"] }
+axum = { version = "0.7.5", features = ["macros", "multipart"] }
 handlebars = "6.1.0"
 once_cell = "1.19.0"
-sea-orm = { version = "=1.1.0-rc.1", features = ["sqlx-sqlite", "runtime-async-std-native-tls"] }
+sea-orm = { version = "=1.1.0-rc.1", features = [
+    "sqlx-sqlite",
+    "runtime-async-std-native-tls",
+] }
 tokio = { version = "1.40.0", features = ["rt", "rt-multi-thread", "macros"] }
 tower-http = { version = "0.5.2", features = ["fs"] }
 tracing = "0.1.40"
@@ -20,3 +23,14 @@ query_filters_traits = { path = "../query_filters_traits" }
 serde = "1.0.210"
 serde_json = "1.0.128"
 thiserror = "1.0.63"
+chrono = "0.4.38"
+paste = "1.0.15"
+captcha_rust = "0.1.3"
+md5 = "0.7.0"
+rand = "0.8.5"
+tower-sessions = "0.13.0"
+sysinfo = { version = "0.32.0", features = ["disk", "serde"] }
+validator = { version = "0.18.1", features = ["derive"] }
+axum-valid = "0.20.0"
+lazy_static = "1.5.0"
+regex = "1.11.0"

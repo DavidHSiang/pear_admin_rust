@@ -1,11 +1,25 @@
+mod common;
+mod dept;
+mod dict;
+mod photo;
+mod power;
+mod role;
+mod system_log;
 mod user;
 
-use std::fmt;
+pub use common::*;
+pub use dept::*;
+pub use dict::*;
+pub use photo::*;
+pub use power::*;
+pub use role::*;
+pub use system_log::*;
+pub use user::*;
 
 use anyhow::Error;
 use sea_orm::FromQueryResult;
 use serde::{de::DeserializeOwned, Deserialize, Serialize};
-pub use user::*;
+use std::fmt;
 
 #[derive(Deserialize, Serialize, Debug, Clone, FromQueryResult, Default)]
 pub struct EmptyVo {}
@@ -60,5 +74,20 @@ where
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
         let json_str = serde_json::to_string(self).map_err(|_| fmt::Error)?;
         write!(f, "{}", json_str)
+    }
+}
+
+mod datetime_format {
+    use chrono::NaiveDateTime;
+    use serde::{self, Serializer};
+
+    const FORMAT: &str = "%Y-%m-%d %H:%M:%S";
+
+    pub fn serialize<S>(date: &NaiveDateTime, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: Serializer,
+    {
+        let s = date.format(FORMAT).to_string();
+        serializer.serialize_str(&s)
     }
 }

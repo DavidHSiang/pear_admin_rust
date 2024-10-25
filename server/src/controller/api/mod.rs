@@ -1,1 +1,9 @@
+pub mod common;
+pub mod dept;
+pub mod dict_data;
+pub mod dict_type;
+pub mod photo;
+pub mod power;
+pub mod role;
+pub mod system_log;
 pub mod user;

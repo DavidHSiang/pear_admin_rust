@@ -1,104 +1,149 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
 </head>
+
 <body>
-<form class="layui-form" action="" id="admin_add">
-    <div class="mainBox">
-        <div class="main-container">
+    <form class="layui-form">
+        <div class="mainBox">
             <div class="main-container">
-                <div class="layui-form-item">
-                    <label class="layui-form-label">登录账号</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="login_name" lay-verify="title" autocomplete="off" placeholder="请输入登录账号" class="layui-input">
+                <div class="main-container">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">账号</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="username" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                                class="layui-input">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">登录密码</label>
-                    <div class="layui-input-block">
-                        <input type="password" name="password" lay-verify="title" autocomplete="off" placeholder="请输入登录密码" class="layui-input">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">姓名</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="real_name" lay-verify="title" autocomplete="off"
+                                placeholder="请输入标题" class="layui-input">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">真实姓名</label>
-                    <div class="layui-input-block">
-                        <input type="text"  name="real_name" lay-verify="title" autocomplete="off" placeholder="请输入真实姓名" class="layui-input">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">密码</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="password" lay-verify="title" autocomplete="off" placeholder="请输入标题"
+                                class="layui-input">
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">联系电话</label>
-                    <div class="layui-input-block">
-                        <input type="text"  name="phone" lay-verify="title" autocomplete="off" placeholder="请输入联系电话" class="layui-input">
+
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">部门</label>
+                        <div class="layui-input-block">
+                            <ul id="select_dept" name="dept_id" class="dtree" data-id="0"></ul>
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">邮箱</label>
-                    <div class="layui-input-block">
-                        <input type="text" name="email" lay-verify="title" autocomplete="off" placeholder="请输入邮箱" class="layui-input">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">角色</label>
+                        <div class="layui-input-block">
+                            {{#each roles}}
+                            <input value="{{this.id}}" title="{{this.name}}" type="checkbox" name="role_ids"
+                                lay-skin="primary">
+                            {{/each}}
+
+                        </div>
                     </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">角色分组</label>
-                    <div class="layui-input-block">
-                        {{!-- {{range $el := .role}}
-                            <input type="checkbox" name="role_ids" value="{{$el.ID}}" title="{{$el.RoleName}}">
-                        {{end}} --}}
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <label class="layui-form-label">状态</label>
-                    <div class="layui-input-block">
-                        <input type="checkbox" name="status" lay-skin="switch">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">状态</label>
+                        <div class="layui-input-block">
+
+                            <input type="radio" name="enable" value="1" title="开启">
+                            <input type="radio" name="enable" checked value="0" title="关闭">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="bottom">
-        <div class="button-container">
-            <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit="" lay-filter="user-save">
-                <i class="layui-icon layui-icon-ok"></i>
-                提交
-            </button>
-            <button type="reset" class="pear-btn pear-btn-sm">
-                <i class="layui-icon layui-icon-refresh"></i>
-                重置
-            </button>
+        <div class="bottom">
+            <div class="button-container">
+                <button type="submit" class="pear-btn pear-btn-primary pear-btn-sm" lay-submit=""
+                    lay-filter="user-save">
+                    <i class="layui-icon layui-icon-ok"></i>
+                    提交
+                </button>
+                <button type="reset" class="pear-btn pear-btn-sm">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
         </div>
-    </div>
-</form>
-<script src="/static/component/layui/layui.js"></script>
-<script src="/static/component/pear/pear.js"></script>
-<script>
-    layui.use(['form','jquery'],function(){
-        let form = layui.form;
-        let $ = layui.jquery;
+    </form>
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+    <script>
 
-        form.on('submit(user-save)', function(data){
-            $.ajax({
-                url:'/system/admin/add',
-                data: $('#admin_add').serialize(),
-                dataType:'json',
-                type:'post',
-                success:function(result){
-                    if(result.code == 200){
-                        layer.msg(result.msg,{icon:1,time:1000},function(){
-                            parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
-                            parent.layui.table.reload("user-table");
-                        });
-                    }else{
-                        layer.msg(result.msg,{icon:2,time:1000});
-                    }
-                }
+        layui.use(['form', 'jquery', 'dtree'], function () {
+            let form = layui.form;
+            let $ = layui.jquery;
+            let dtree = layui.dtree
+
+            dtree.renderSelect({
+                elem: '#select_dept',
+                url: '/api/depts',
+                method: 'get',
+                selectInputName: { nodeId: 'dept_id' },
+                skin: 'layui',
+                dataFormat: 'list',
+                dataStyle: 'layuiStyle',
+                response: {
+                    statusName: 'code',    // 状态码字段名
+                    statusCode: "0",       // 成功状态码，注意类型需匹配
+                    message: 'msg',        // 提示信息字段名
+                    rootName: 'data',      // 数据列表字段名
+                    treeId: 'id',     // 节点ID字段名
+                    parentId: 'parent_id',  // 父节点ID字段名
+                    title: 'dept_name'     // 节点标题字段名
+                },
+                selectInitVal: '1'
             })
-            return false;
-        });
-    })
-</script>
-<script>
-</script>
+
+            form.on('submit(user-save)', function (data) {
+                if (data.field.dept_id) {
+                    data.field.dept_id = parseInt(data.field.dept_id, 10);  // 确保是整数而不是字符串
+                }
+
+                if (data.field.enable) {
+                    data.field.enable = parseInt(data.field.enable, 10);  // 确保是整数而不是字符串
+                }
+
+                let role_ids = ''
+                $('input[type=checkbox]:checked').each(function () {
+                    role_ids += $(this).val() + ','
+                })
+                role_ids = role_ids.substr(0, role_ids.length - 1)
+                data.field.role_ids = role_ids
+
+                $.ajax({
+                    url: '/api/users',
+                    data: JSON.stringify(data.field),
+                    contentType: 'application/json',
+                    dataType: 'json',
+                    type: 'post',
+                    success: function (result) {
+                        if (result.code == "0") {
+                            layer.msg(result.msg, { icon: 1, time: 1000 }, function () {
+                                parent.layer.close(parent.layer.getFrameIndex(window.name));//关闭当前页
+                                parent.layui.table.reload("user-table");
+                            });
+                        } else {
+                            layer.msg(result.msg, { icon: 2, time: 1000 });
+                        }
+                    }
+                })
+                return false;
+            });
+            form.render();
+        })
+    </script>
+    <script>
+    </script>
 </body>
+
 </html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>部门管理</title>
+    <link rel="stylesheet" href="/static/component/pear/css/pear.css" />
+</head>
+
+<body class="pear-container">
+
+    <div class="layui-card"></div>
+    <div class="layui-card-body">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <label class="layui-form-label">部门名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="deptName" placeholder="" class="layui-input">
+                </div>
+                <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="dept-query">
+                    <i class="layui-icon layui-icon-search"></i>
+                    查询
+                </button>
+                <button type="reset" class="pear-btn pear-btn-md">
+                    <i class="layui-icon layui-icon-refresh"></i>
+                    重置
+                </button>
+            </div>
+        </form>
+    </div>
+    </div>
+
+    <div class="layui-card">
+        <div class="layui-card-body">
+            <table id="dept-table" lay-filter="dept-table"></table>
+        </div>
+    </div>
+
+    <script type="text/html" id="dept-toolbar">
+        <button class="pear-btn pear-btn-primary pear-btn-md" lay-event="add">
+            <i class="layui-icon layui-icon-add-1"></i>
+            新增
+        </button>
+</script>
+
+    <script type="text/html" id="dept-bar">
+        <button class="pear-btn pear-btn-primary pear-btn-sm" lay-event="edit"><i
+                class="layui-icon layui-icon-edit"></i>
+        </button>
+        <button class="pear-btn pear-btn-danger pear-btn-sm" lay-event="remove"><i
+                class="layui-icon layui-icon-delete"></i>
+        </button>
+</script>
+
+
+    <script src="/static/component/layui/layui.js"></script>
+    <script src="/static/component/pear/pear.js"></script>
+
+    <script>
+        layui.use(['table', 'form', 'jquery', 'treetable', 'popup'], function () {
+            let table = layui.table
+            let form = layui.form
+            let $ = layui.jquery
+            let treetable = layui.treetable
+            let popup = layui.popup
+
+            let MODULE_PATH = '/api/depts'
+
+            window.render = function () {
+                treetable.render({
+                    treeColIndex: 1,
+                    treeSpid: 0,
+                    treeIdName: 'id',
+                    treePidName: 'parent_id',
+                    skin: 'line',
+                    method: 'post',
+                    treeDefaultClose: false,
+                    toolbar: '#dept-toolbar',
+                    elem: '#dept-table',
+                    url: MODULE_PATH,
+                    page: false,
+                    cols: [
+                        [
+                            { field: 'id', title: 'id' },
+                            { field: 'dept_name', minWidth: 200, title: '机构名称' },
+                            { field: 'leader', title: '负责人' },
+                            { field: 'phone', title: '联系方式' },
+                            { field: 'email', title: '邮箱' },
+                            { field: 'address', title: '详细地址' },
+                            {
+                                title: '状态',
+                                field: 'enable',
+                                align: 'center',
+                                templet: function (res) {
+                                    if (res.enable == 1) {
+                                        return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="dept-enable" checked>'
+                                    } else {
+                                        return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="dept-enable">'
+                                    }
+                                }
+                            },
+                            { field: 'sort', title: '排序', width: 100 },
+                            { title: '操作', templet: '#dept-bar', width: 120, align: 'center' }
+                        ]
+                    ]
+                })
+            }
+
+            form.on('submit(dept-query)', function (data) {
+                var keyword = data.field.deptName
+                var $tds = $('#dept-table').next('.treeTable').find('.layui-table-body tbody tr td')
+                if (!keyword) {
+                    $tds.css('background-color', 'transparent')
+                    layer.msg('请输入关键字', { icon: 5 })
+                    return
+                }
+                var searchCount = 0
+                $tds.each(function () {
+                    $(this).css('background-color', 'transparent')
+                    if ($(this).text().indexOf(keyword) >= 0) {
+                        $(this).css('background-color', 'rgba(250,230,160,0.5)')
+                        if (searchCount === 0) {
+                            $('body,html').stop(true)
+                            $('body,html').animate({ scrollTop: $(this).offset().top - 150 }, 500)
+                        }
+                        searchCount++
+                    }
+                })
+                if (searchCount === 0) {
+                    layer.msg('没有匹配结果', { icon: 5 })
+                } else {
+                    treetable.expandAll('#dept-table')
+                }
+                return false
+            })
+
+            render()
+
+            table.on('tool(dept-table)', function (obj) {
+                if (obj.event === 'remove') {
+                    window.remove(obj)
+                } else if (obj.event === 'edit') {
+                    window.edit(obj)
+                }
+            })
+
+            table.on('toolbar(dept-table)', function (obj) {
+                if (obj.event === 'add') {
+                    window.add()
+                } else if (obj.event === 'refresh') {
+                    window.refresh()
+                }
+            })
+
+            form.on('switch(dept-enable)', function (obj) {
+
+                $.ajax({
+                    url: '/api/depts/' + this.value + '/enable',
+                    dataType: 'json',
+                    contentType: 'application/json',
+                    type: 'PATCH',
+                    success: function (result) {
+                        if (result.code == "0") {
+                            layer.msg(result.msg, {
+                                icon: 1,
+                                time: 1000
+                            });
+                        } else {
+                            layer.msg(result.msg, {
+                                icon: 2,
+                                time: 1000
+                            });
+                        }
+                    }
+                })
+            })
+
+            window.add = function () {
+                layer.open({
+                    type: 2,
+                    title: '新增',
+                    shade: 0.1,
+                    area: ['450px', '500px'],
+                    content: '/depts/add'
+                })
+            }
+
+            window.edit = function (obj) {
+                layer.open({
+                    type: 2,
+                    title: '修改',
+                    shade: 0.1,
+                    area: ['450px', '500px'],
+                    content: '/depts/edit/' + obj.data['id']
+                })
+            }
+
+            window.remove = function (obj) {
+                layer.confirm('确定要删除该部门', { icon: 3, title: '提示' }, function (index) {
+                    layer.close(index)
+                    let loading = layer.load()
+                    $.ajax({
+                        url: MODULE_PATH + '/' + obj.data['id'],
+                        dataType: 'json',
+                        type: 'delete',
+                        success: function (result) {
+                            layer.close(loading)
+                            if (result.code == "0") {
+                                popup.success(result.msg, function () {
+                                    obj.del()
+                                })
+                            } else {
+                                popup.failure(result.msg)
+                            }
+                        }
+                    })
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

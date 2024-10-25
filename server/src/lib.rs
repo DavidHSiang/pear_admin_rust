@@ -1,6 +1,7 @@
 mod controller;
 mod database;
-mod domain;
+mod middleware;
+mod models;
 mod router;
 mod service;
 mod utils;

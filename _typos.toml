@@ -1,4 +1,10 @@
 [default.extend-words]
 
 [files]
-extend-exclude = ["CHANGELOG.md", "notebooks/*", "static/*"]
+extend-exclude = [
+    "CHANGELOG.md",
+    "notebooks/*",
+    "static/*",
+    "template/*",
+    "server/src/controller/api/common.rs",
+]

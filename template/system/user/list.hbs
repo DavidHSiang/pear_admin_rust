@@ -13,32 +13,26 @@
             <form class="layui-form" action="">
                 <div class="layui-form-item">
                     <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">登录账号</label>
+                        <label class="layui-form-label">账号</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="login_name" placeholder="" class="layui-input">
+                            <input type="text" name="username" placeholder="" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">联系电话</label>
+                        <label class="layui-form-label">姓名</label>
                         <div class="layui-input-inline">
-                            <input type="text" name="phone" placeholder="" class="layui-input">
-                        </div>
-                    </div>
-                    <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">邮箱</label>
-                        <div class="layui-input-inline">
-                            <input type="text" name="email" placeholder="" class="layui-input">
+                            <input type="text" name="real_name" placeholder="" class="layui-input">
                         </div>
                     </div>
                     <div class="layui-form-item layui-inline">
                         <button class="pear-btn pear-btn-md pear-btn-primary" lay-submit lay-filter="user-query">
-                        <i class="layui-icon layui-icon-search"></i>
-                        查询
-                    </button>
+                            <i class="layui-icon layui-icon-search"></i>
+                            查询
+                        </button>
                         <button type="reset" class="pear-btn pear-btn-md">
-                        <i class="layui-icon layui-icon-refresh"></i>
-                        重置
-                    </button>
+                            <i class="layui-icon layui-icon-refresh"></i>
+                            重置
+                        </button>
                     </div>
                 </div>
             </form>
@@ -69,7 +63,7 @@
     <script src="/static/component/layui/layui.js"></script>
     <script src="/static/component/pear/pear.js"></script>
     <script>
-        layui.use(['table', 'form', 'jquery', 'common'], function() {
+        layui.use(['table', 'form', 'jquery', 'common'], function () {
             let table = layui.table;
             let form = layui.form;
             let $ = layui.jquery;
@@ -94,31 +88,35 @@
                         align: 'center',
                         width: 100
                     }, {
-                        title: '登录账号',
-                        field: 'login_name',
+                        title: '账号',
+                        field: 'username',
                         align: 'center',
                         width: 100
                     }, {
-                        title: '真实姓名',
+                        title: '姓名',
                         field: 'real_name',
                         align: 'center'
                     }, {
-                        title: '联系电话',
-                        field: 'phone',
+                        title: '部门',
+                        field: 'dept_name',
                         align: 'center'
                     }, {
-                        title: '电子邮箱',
-                        field: 'email',
+                        title: '注册时间',
+                        field: 'create_at',
+                        align: 'center'
+                    }, {
+                        title: '更新时间',
+                        field: 'update_at',
                         align: 'center'
                     }, {
                         title: '状态',
-                        field: 'status',
+                        field: 'enable',
                         align: 'center',
-                        templet: function(res) {
-                            if (res.status == 1) {
-                                return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "true">'
+                        templet: function (res) {
+                            if (res.enable == 1) {
+                                return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked>'
                             } else {
-                                return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" checked = "false">'
+                                return '<input type="checkbox" name="enable" value="' + res.id + '" lay-skin="switch" lay-text="启用|禁用" lay-filter="user-enable" >'
                             }
                         }
                     }, {
@@ -130,13 +128,14 @@
                 ],
                 skin: 'line',
                 toolbar: '#user-toolbar',
-                parseData: function(res) { // res 即为原始返回的数据
+                parseData: function (res) { // res 即为原始返回的数据
                     return {
-                    "code": res.code, // 解析接口状态
-                    "msg": res.msg, // 解析提示文本
-                    "count": res.data.total, // 解析数据长度
-                    "data": res.data.list // 解析数据列表
-                    };},
+                        "code": res.code, // 解析接口状态
+                        "msg": res.msg, // 解析提示文本
+                        "count": res.data.total, // 解析数据长度
+                        "data": res.data.list // 解析数据列表
+                    };
+                },
                 defaultToolbar: [{
                     title: '刷新',
                     layEvent: 'refresh',
@@ -144,7 +143,7 @@
                 }, 'filter', 'print', 'exports']
             });
 
-            table.on('tool(user-table)', function(obj) {
+            table.on('tool(user-table)', function (obj) {
                 if (obj.event === 'remove') {
                     window.remove(obj);
                 } else if (obj.event === 'edit') {
@@ -152,7 +151,7 @@
                 }
             });
 
-            table.on('toolbar(user-table)', function(obj) {
+            table.on('toolbar(user-table)', function (obj) {
                 if (obj.event === 'add') {
                     window.add();
                 } else if (obj.event === 'refresh') {
@@ -162,7 +161,7 @@
                 }
             });
 
-            form.on('submit(user-query)', function(data) {
+            form.on('submit(user-query)', function (data) {
                 table.reload('user-table', {
                     where: data.field
                 })
@@ -170,18 +169,14 @@
             });
 
             // 启用-禁用开关
-            form.on('switch(user-enable)', function(obj) {
-                var status = 0;
-                if(obj.elem.checked){
-                    status = 1
-                }
+            form.on('switch(user-enable)', function (obj) {
+
                 $.ajax({
-                    url: "/system/admin/status",
-                    type: "POST",
-                    data: {id:this.value,status:status},
-                    dataType:'json',
-                    success: function(result) {
-                        if (result.code == 200) {
+                    url: "/api/users/" + this.value + "/enable",
+                    type: "PATCH",
+                    dataType: 'json',
+                    success: function (result) {
+                        if (result.code == "0") {
                             layer.msg(result.msg, {
                                 icon: 1,
                                 time: 1000
@@ -196,44 +191,44 @@
                 });
             });
 
-            window.add = function() {
+            window.add = function () {
                 layer.open({
                     type: 2,
                     title: '新增',
                     shade: 0.1,
-                    area: [common.isMobile() ? '100%' : '500px', common.isMobile() ? '100%' : '400px'],
+                    area: [common.isMobile() ? '100%' : '500px', common.isMobile() ? '100%' : '500px'],
                     content: '/users/add'
                 });
             }
 
-            window.edit = function(obj) {
+            window.edit = function (obj) {
                 layer.open({
                     type: 2,
                     title: '修改',
                     shade: 0.1,
                     area: ['500px', '400px'],
-                    content: '/system/admin/edit/?id=' + obj.data.id
+                    content: '/users/edit/' + obj.data.id
                 });
             }
 
-            window.remove = function(obj) {
+            window.remove = function (obj) {
                 layer.confirm('确定要删除该用户', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     layer.close(index);
                     let loading = layer.load();
                     $.ajax({
-                        url: "/system/admin/delete?id=" + obj.data['id'],
+                        url: "/api/users/" + obj.data['id'],
                         dataType: 'json',
                         type: 'delete',
-                        success: function(result) {
+                        success: function (result) {
                             layer.close(loading);
-                            if (result.code == 200) {
+                            if (result.code == "0") {
                                 layer.msg(result.msg, {
                                     icon: 1,
                                     time: 1000
-                                }, function() {
+                                }, function () {
                                     obj.del();
                                 });
                             } else {
@@ -248,35 +243,39 @@
                 });
             }
 
-            window.batchRemove = function(obj) {
-
-                var checkIds = common.checkField(obj, 'userId');
-
-                if (checkIds === "") {
-                    layer.msg("未选中数据", {
+            window.batchRemove = function (obj) {
+                let data = table.checkStatus(obj.config.id).data
+                console.log(data)
+                if (data.length === 0) {
+                    layer.msg('未选中数据', {
                         icon: 3,
                         time: 1000
-                    });
-                    return false;
+                    })
+                    return false
                 }
+                var ids = []
+                for (var i = 0; i < data.length; i++) {
+                    ids.push(data[i].id)
+                }
+                console.log(ids)
 
                 layer.confirm('确定要删除这些用户', {
                     icon: 3,
                     title: '提示'
-                }, function(index) {
+                }, function (index) {
                     layer.close(index);
                     let loading = layer.load();
                     $.ajax({
-                        url: MODULE_PATH + "batchRemove/" + ids,
+                        url: "/api/users/" + ids,
                         dataType: 'json',
                         type: 'delete',
-                        success: function(result) {
+                        success: function (result) {
                             layer.close(loading);
-                            if (result.success) {
+                            if (result.code == "0") {
                                 layer.msg(result.msg, {
                                     icon: 1,
                                     time: 1000
-                                }, function() {
+                                }, function () {
                                     table.reload('user-table');
                                 });
                             } else {
@@ -290,7 +289,7 @@
                 });
             }
 
-            window.refresh = function(param) {
+            window.refresh = function (param) {
                 table.reload('user-table');
             }
         })
